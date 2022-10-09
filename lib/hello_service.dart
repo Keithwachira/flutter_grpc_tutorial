@@ -14,10 +14,12 @@ class HelloService {
   ///static HelloService instance that we will call when we want to make requests
   static HelloService get instance => _instance;
    ///HelloClient is the  class that was generated for us when we ran the generation command
-  ///We will pass a channel to it to intialize it
+  ///it represent our Hello service in our proto file.
+  ///We will be calling any method from that service using this instance.
+  ///We will pass a channel to it to initialize it
   late HelloClient _helloClient;
 
-  ///this will be used to create a channel once we create this class.
+  ///this will be used to create a channel once we create an instance of class.
   ///Call HelloService().init() before making any call.
   Future<void> init() async {
     _createChannel();
@@ -28,7 +30,7 @@ class HelloService {
     return _helloClient;
   }
 
-  ///here we create a channel and use it to initialize the HelloClientthat was generated
+  ///here we create a channel and use it to initialize the HelloClient that was generated
   ///
   _createChannel() {
     final channel = ClientChannel(
@@ -38,9 +40,11 @@ class HelloService {
       port: 443,
 
       ///use credentials: ChannelCredentials.insecure() if you want to connect without Tls
+      ///Sample without TLS
       //options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
 
       ///use this if you are connecting with Tls
+      ///Sample with TLS
       options: const ChannelOptions(),
     );
     _helloClient = HelloClient(channel);
